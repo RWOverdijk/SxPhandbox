@@ -15,7 +15,9 @@ class ExecuteAction extends AbstractAction
     protected function lintCode($code)
     {
         $tmpFile = tempnam(sys_get_temp_dir(), 'lint');
-        file_put_contents($tmpFile, $code);
+        
+        $debug = "<?php error_reporting(E_ALL);ini_set('display_errors', '1');?>";
+        file_put_contents($tmpFile, $debug.$code);
 
         $op             = `php -l $tmpFile`;
         $execOutput     = `php $tmpFile`;
