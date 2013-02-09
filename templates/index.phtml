@@ -434,6 +434,8 @@ echo "hello world";
     var outputDiv   = $('#output');
     var reqTo, reqAct;
     var stMessage   = $('#toolbar .status-message');
+    var filename    = $('#filename');
+    var snippets    = $('#snippet-list');
     editor.setTheme("ace/theme/monokai");
     editor.getSession().setMode("ace/mode/php");
     editor.getSession().on('change', function(e) {
@@ -472,14 +474,16 @@ echo "hello world";
     };
     
     actions.save = function(data) {
-        mkReq('save', {filename: $('#filename').val(), pcode : editor.getValue()}, function() {
+        mkReq('save', {filename: filename.val(), pcode : editor.getValue()}, function() {
             statusMessage('Code saved!');
+            $('<option />').val(filename.val()).text(filename.val()).appendTo(snippets);
+            snippets.val(filename.val());
         });
     };
     
     actions.load = function(data) {
         mkReq('load', {filename: $('#snippet-list').val()}, function(data) {
-            $('#filename').val($('#snippet-list').val());
+            $('#filename').val(snippets.val());
             editor.setValue(data.code);
             statusMessage('Code loaded!');
         });
