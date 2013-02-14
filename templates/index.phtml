@@ -351,8 +351,9 @@ optgroup::-moz-focus-inner {
         right: 0;
         bottom: 0;
         left: 50%;
+        overflow: auto;
     }
-    
+
     #toolbar {
 background: #eeeeee; /* Old browsers */
 background: -moz-linear-gradient(top,  #eeeeee 0%, #cccccc 100%); /* FF3.6+ */
@@ -371,19 +372,19 @@ border-bottom: 1px solid #2d2d2d;
         left: 0;
         height: 39px;
     }
-    
+
     #toolbar button, #toolbar input, #toolbar select {
         height: 30px;
         margin-top: 5px;
         margin-left: 5px;
         font-size: 13px;
     }
-    
+
     #toolbar select {
         margin-top: 7px;
         height: 26px;
     }
-    
+
     #toolbar .status-message {
         float: right;
         text-shadow:1px 0px 0px #ebebeb;
@@ -393,7 +394,7 @@ border-bottom: 1px solid #2d2d2d;
         font-size: 14px;
         font-family: Arial, "Liberation Sans", FreeSans, sans-serif;
     }
-    
+
     .separator {
         display: inline-block;
         width: 1px;
@@ -405,7 +406,7 @@ border-bottom: 1px solid #2d2d2d;
 </style>
 </head>
 <body>
-    
+
 
 <div id="toolbar">
     <input type="text" id="filename" placeholder="Filename" />
@@ -454,7 +455,7 @@ echo "hello world";
             }, 'json');
         }, 300);
     });
-    
+
     var actions = {};
     var statusMessage = function(txt) {
         stMessage.text(txt);
@@ -465,14 +466,14 @@ echo "hello world";
             });
         }, 3000);
     };
-    
+
     var mkReq = function(action, data, cb) {
         clearTimeout(reqAct);
         reqAct = setTimeout(function() {
             $.get('/'+action, data, cb, 'json');
         }, 300);
     };
-    
+
     actions.save = function(data) {
         mkReq('save', {filename: filename.val(), pcode : editor.getValue()}, function() {
             statusMessage('Code saved!');
@@ -480,7 +481,7 @@ echo "hello world";
             snippets.val(filename.val());
         });
     };
-    
+
     actions.load = function(data) {
         mkReq('load', {filename: $('#snippet-list').val()}, function(data) {
             $('#filename').val(snippets.val());
@@ -488,7 +489,7 @@ echo "hello world";
             statusMessage('Code loaded!');
         });
     };
-    
+
     $('#toolbar button').on('click', function() {
         var action = $(this).data('action');
         actions[action]();
